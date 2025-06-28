@@ -172,7 +172,7 @@ public class Program
 
     static void Anyadir(Toplevel top)
     {
-        var ventanaAnyadir = new Window("Añadir")
+        Window ventanaAnyadir = new Window("Añadir") // Suggestion Ellipsis 
         {
             X = 0,
             Y = 0,
