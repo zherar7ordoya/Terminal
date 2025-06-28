@@ -1,0 +1,38 @@
+name: Build and publish v1 API docs
+
+on:
+  push:
+    branches: [ v1_release, v1_develop ]
+    paths: 
+      - docfx/**
+
+jobs:
+  deploy:
+    name: Build and Deploy v1 API docs Terminal.GuiV1Docs Repository
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: DocFX Build
+      working-directory: docfx
+      run: |
+        dotnet tool install -g docfx
+        $env:DOCFX_SOURCE_BRANCH_NAME="${{ github.ref_name }}"
+        docfx metadata
+        docfx build
+      continue-on-error: false
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: docfx/_site
+       
+    - name: Terminal.GuiV1Docs Repository Dispatch ${{ github.ref_name }}
+      if: github.ref_name == 'v1_release'
+      uses: peter-evans/repository-dispatch@v3
+      with:
+        token: ${{ secrets.V2DOCS_TOKEN }}
+        repository: gui-cs/Terminal.GuiV1Docs
+        event-type: v1_release_push
+        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'

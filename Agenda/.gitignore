@@ -1,0 +1,8 @@
+# Ignore temporary directories from Visual Studio 2022
+.vs/
+.vscode/
+# Ignore build directories
+bin/
+obj/
+# Ignore NuGet packages
+packages/
