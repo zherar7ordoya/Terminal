@@ -1,16 +1,12 @@
 ﻿using Terminal.Gui;
 
-namespace TerminalGui;
+namespace TUI;
 
-public class Persona
+public class Persona(string nombre, string direccion)
 {
-    public string Nombre { get; set; }
-    public string Direccion { get; set; }
-    public Persona(string nombre, string direccion)
-    {
-        Nombre = nombre;
-        Direccion = direccion;
-    }
+    public string Nombre { get; set; } = nombre;
+    public string Direccion { get; set; } = direccion;
+
     public override string ToString()
     {
         return $"{Nombre} - {Direccion}";
@@ -67,7 +63,7 @@ public class Program
             new(Key.PageDown, "~Av.Pág.~ Siguiente", Avanzar),
             new(Key.F2, "~F2~ Añadir", () => Anyadir(top)),
             new(Key.F3, "~F3~ Lista", () => VerLista(top)),
-            new(Key.F4, "~F4~ Eliminar", () => Eliminar()),
+            new(Key.F4, "~F4~ Eliminar", Eliminar),
             new(Key.Esc, "~Esc~ Salir", () => Application.RequestStop())
         ]);
 
@@ -76,7 +72,7 @@ public class Program
         Application.Run();
     }
 
-    private static void Eliminar()
+    private static void Eliminar() // Symbol - Static
     {
         var respuesta = MessageBox.Query("Confirmación", $"¿Deseas eliminar el registro actual?: {personas[posicionActual].Nombre}", "Sí", "No");
 
@@ -94,7 +90,7 @@ public class Program
 
     private static void Guardar()
     {
-        StreamWriter writer = new StreamWriter("agenda.txt");
+        StreamWriter writer = new("agenda.txt");
 
         foreach (var persona in personas)
         {
@@ -172,7 +168,7 @@ public class Program
 
     static void Anyadir(Toplevel top)
     {
-        Window ventanaAnyadir = new Window("Añadir") // Suggestion Ellipsis 
+        Window ventanaAnyadir = new("Añadir") // Suggestion Ellipsis 
         {
             X = 0,
             Y = 0,
