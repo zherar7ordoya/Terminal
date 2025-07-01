@@ -1,35 +1,16 @@
 ﻿using Application;
 
-using Domain.Services;
+
 
 using Presentation.Views;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Terminal.Gui;
-
 namespace Presentation;
 
-public class App
+public static class App
 {
-    private ContactController _controller;
-
-    public App()
+    public static void Run(ContactController controller)
     {
-        // wiring de dependencias
-        IContactRepository repo = new FileContactRepository("Data.txt");
-        _controller = new ContactController(repo);
-    }
-
-    public void Run()
-    {
-        var top = Terminal.Gui.Application.Top;
-        var mainView = new MainView(_controller, top);
-        top.Add(mainView);
-        Terminal.Gui.Application.Run();
+        var mainView = new MainView(controller);
+        Terminal.Gui.Application.Top.Add(mainView);
     }
 }

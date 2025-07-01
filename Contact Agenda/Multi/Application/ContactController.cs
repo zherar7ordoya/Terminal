@@ -1,8 +1,6 @@
 ﻿using Domain.Models;
 using Domain.Services;
 
-using System;
-
 namespace Application;
 
 public class ContactController
@@ -14,7 +12,7 @@ public class ContactController
     public ContactController(IContactRepository repository)
     {
         _repository = repository;
-        _persons = new List<Person>(_repository.LoadAll());
+        _persons = [.. _repository.LoadAll()];
         _position = _persons.Count > 0 ? 0 : -1;
     }
 
@@ -47,12 +45,14 @@ public class ContactController
         return false;
     }
 
-    public void Add(Person person)
+    public void Add(string firstName, string address)
     {
+        var person = new Person(firstName, address);
         _persons.Add(person);
         _position = _persons.Count - 1;
         _repository.SaveAll(_persons);
     }
+
 
     public bool DeleteCurrent()
     {

@@ -1,12 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application;
 
-namespace Presentation.Views
+using Terminal.Gui;
+
+namespace Presentation.Views;
+
+public class ContactListView : Window
 {
-    internal class ContactListView
+    public ContactListView(ContactController controller, Action onSelection)
+        : base("All Contacts")
     {
+        X = 0;
+        Y = 0;
+        Width = Dim.Fill();
+        Height = Dim.Fill();
+
+        var persons = controller.GetAll().ToList();
+
+        var listView = new ListView(persons)
+        {
+            X = 2,
+            Y = 1,
+            Width = Dim.Fill(2),
+            Height = Dim.Fill(3),
+            CanFocus = true
+        };
+
+        listView.OpenSelectedItem += args =>
+        {
+            var index = args.Item;
+            // Esto cambia la posición activa en el controlador
+            while (controller.GetCurrentIndex() < index) controller.MoveNext();
+            while (controller.GetCurrentIndex() > index) controller.MovePrevious();
+
+            onSelection();
+            Terminal.Gui.Application.Top.Remove(this);
+        };
+
+        var closeButton = new Button("Close") { X = Pos.Center(), Y = Pos.Bottom(listView) + 1 };
+        closeButton.Clicked += () => Terminal.Gui.Application.Top.Remove(this);
+
+        Add(listView, closeButton);
     }
 }
