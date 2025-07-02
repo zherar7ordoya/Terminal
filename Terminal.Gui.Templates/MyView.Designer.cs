@@ -8,12 +8,12 @@
 //      the code is regenerated.
 //  </auto-generated>
 // -----------------------------------------------------------------------------
-namespace View {
+namespace myproj {
     using System;
     using Terminal.Gui;
     
     
-    public partial class MainView : Terminal.Gui.Window {
+    public partial class MyView : Terminal.Gui.Window {
         
         private Terminal.Gui.Label label1;
         

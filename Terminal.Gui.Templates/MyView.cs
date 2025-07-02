@@ -7,13 +7,13 @@
 //      You can make changes to this file and they will not be overwritten when saving.
 //  </auto-generated>
 // -----------------------------------------------------------------------------
-namespace View{
+namespace myproj{
     using Terminal.Gui;
     
     
-    public partial class MainView {
+    public partial class MyView {
         
-        public MainView() {
+        public MyView() {
             InitializeComponent();
             button1.Clicked += () => MessageBox.Query("Hello", "Hello There!", "Ok");
         }

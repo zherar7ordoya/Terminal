@@ -1,11 +1,11 @@
-﻿using View;
+﻿using myproj;
 using Terminal.Gui;
 
 Application.Init();
 
 try
 {
-    Application.Run(new MainView());
+    Application.Run(new MyView());
 }
 finally
 {

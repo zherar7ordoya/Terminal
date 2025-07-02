@@ -1,7 +1,4 @@
 ﻿using Application;
-
-
-
 using Presentation.Views;
 
 namespace Presentation;
