@@ -6,8 +6,7 @@ namespace Presentation.Views;
 
 public class ContactListView : Window
 {
-    public ContactListView(ContactController controller, Action onSelection)
-        : base("All Contacts")
+    public ContactListView(ContactController controller, Action onSelection) : base("All Contacts")
     {
         X = 0;
         Y = 0;
@@ -33,11 +32,11 @@ public class ContactListView : Window
             while (controller.GetCurrentIndex() > index) controller.MovePrevious();
 
             onSelection();
-            Terminal.Gui.Application.Top.Remove(this);
+            Terminal.Gui.Application.RequestStop(); // esto cierra el modal correctamente
         };
 
         var closeButton = new Button("Close") { X = Pos.Center(), Y = Pos.Bottom(listView) + 1 };
-        closeButton.Clicked += () => Terminal.Gui.Application.Top.Remove(this);
+        closeButton.Clicked += () => Terminal.Gui.Application.RequestStop();
 
         Add(listView, closeButton);
     }

@@ -34,7 +34,7 @@ public class AddContactView : Window
 
             controller.Add(name, addr);
             onAddComplete();
-            Terminal.Gui.Application.Top.Remove(this);
+            Terminal.Gui.Application.RequestStop(); // Close the modal
         };
 
         Add(labelFirstName, textFirstName, labelAddress, textAddress, buttonAccept);
